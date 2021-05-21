@@ -23,6 +23,6 @@ urlpatterns = [
     path("clientes/<int:id>/",clientes),
 
     #api
-    # path("api/", include (("api.urls","api"))),
-    #path()
+    path("api/", include (("api.urls","api"))),
+    
 ]

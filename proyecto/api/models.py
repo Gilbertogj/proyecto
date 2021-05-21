@@ -1,5 +1,13 @@
 from django.db import models
 
+
+#Relations
+# 1 Cliente - N Obra
+# 1 Cliente - N Pedido
+# 1 Obra - N Pedido
+# 1 Planta - N Pedido
+
+
 # Create your models here.
 class Cliente(models.Model):
     """Cliente model."""
@@ -27,10 +35,13 @@ class Obra(models.Model):
     email = models.EmailField(unique=True, blank=True)  
     created_at = models.DateTimeField(auto_now_add=True)
 
-    
+    # Relations
+    cliente = models.ForeignKey(
+        Cliente, on_delete=models.PROTECT, related_name="obras"
+    )
 
     def __str__(self):
-        return f"{self.nombre} {self.residente}"
+        return f"{self.nombre} {self.residente} cliente:{self.cliente.name}"
 
 
 class Planta(models.Model):
@@ -41,13 +52,13 @@ class Planta(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.nombre}"
+        return f"{self.nombre} {self.direccion}"
 
 
 class Pedido(models.Model):
     """Cliente model."""
 
-     TIPO_CONCRETO = (
+    TIPO_CONCRETO = (
         ("C", "Convencional"),
         ("R", "Rápido"),
         ("LZ", "Lanzado"),
@@ -109,24 +120,95 @@ class Pedido(models.Model):
         ("Pluma", "Bomba Pluma"),
         ("Estacionaria", "Bomba Estacionaria"),
     )
-    tipo_bomba = models.CharField(max_length=10, choices=TIPO_BOMBA, default="Pluma")
+    tipo_bomba = models.CharField(max_length=20, choices=TIPO_BOMBA, default="Pluma")
 
-    numero_bomba = models.CharField(max_length=255)
+    NUMERO_BOMBA= (
+        ("BC-03 Pluma", "BC-03 Pluma"),
+        ("BC-04 Pluma", "BC-04 Pluma"),
+        ("BC-05 Pluma", "BC-05 Pluma"),
+        ("BC-06 Estacionaria", "BC-06 Estacionaria"),
+        
+    )
+    numero_bomba = models.CharField(max_length=30, choices=NUMERO_BOMBA, default="BC-03 Pluma")
     metros_adicionales = models.CharField(max_length=255)
-    aditivo = models.CharField(max_length=255)
+
+    ADITIVO= (
+        ("Acelerante a 1 día", "Acelerante a 1 día"),
+        ("Acelerante a 14 días", "Acelerante a 14 días"),
+        ("Acelerante a 3 días", "Acelerante a 3 días"),
+        ("Acelerante a 7 días", "Acelerante a 7 días"),
+        ("Ahorrador de agua", "Ahorrador de agua"),
+        ("Autocompactable", "Autocompactable"),
+        ("Autocurable", "Autocurable"),
+        ("Fibra de acero", "Fibra de acero"),
+        ("Fibra de polipropileno", "Fibra de polipropileno"),
+        ("Fluidizante", "Fluidizante"),
+        ("Impermeabilizante al 1%", "Impermeabilizante al 1%"),
+        ("Impermeabilizante al 2%", "Impermeabilizante al 2%"),
+        ("Impermeabilizante al 4%", "Impermeabilizante al 4%"),
+        ("Inclusor de aire", "Inclusor de aire"),
+        ("Perlita de polipropileno", "Perlita de polipropileno"),
+        ("Plastificantes", "Plastificantes"),
+        ("Retardante", "Retardante"),
+        
+    
+    )
+    aditivo = models.CharField(max_length=30, choices=ADITIVO, default="Acelerante a 1 día")
 
     ELEMENTO_COLAR= (
-        ("Ban", "Bomba Pluma"),
-        ("Estacionaria", "Bomba Estacionaria"),
+        ("Arroyo", "Arroyo"),
+        ("Ballenas", "Ballenas"),
+        ("Cabezales", "Cabezales"),
+        ("Castillos", "Castillos"),
+        ("Cimentación", "Cimentación"),
+        ("Columnas", "Columnas"),
+        ("Contra trabes", "Contra trabes"),
+        ("Dados", "Dados"),
+        ("Diamantes", "Diamantes"),
+        ("Encofrado", "Encofrado"),
+        ("Escaleras", "Escaleras"),
+        ("Firme", "Firme"),
+        ("Firme pulido", "Firme pulido"),
+        ("Guarnición", "Guarnición"),
+        ("Huellas", "Huellas"),
+        ("Losa de azotea", "Losa de azotea"),
+        ("Losa de entre piso", "Losa de entre piso"),
+        ("Losa primer piso", "Losa primer piso"),
+        ("Losa segundo piso", "Losa segundo piso"),
+        ("Losacero", "Losacero"),
+        ("Muro de contención", "Muro de contención"),
+        ("Muros de carga", "Muros de carga"),
+        ("Nivelación de losa", "Nivelación de losa"),
+        ("Pisos", "Pisos"),
+        ("Rampa de acceso", "Rampa de acceso"),
+        ("Talud", "Talud"),
+        ("Zapata corrida", "Zapata corrida"),
+        ("Zapatas", "Zapatas"),
     )
-
-    elemento_colar = models.CharField(max_length=10, choices=TIPO_BOMBA, default="Pluma")
+    elemento_colar = models.CharField(max_length=255, choices=ELEMENTO_COLAR, default="Pisos")
     observaciones = models.CharField(max_length=255)
+    fecha_pedido = models.DateTimeField()
 
-
-
-    fecha_pedido = models.CharField(max_length=255)
+    STATUS_TYPE= (
+        ("Activado", "Activado"),
+        ("Desactivado", "Desactivado"),
+    )
+    status= models.CharField(max_length=25, choices=STATUS_TYPE, default="Activado")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # Relations
+    obra = models.ForeignKey(
+        Obra, on_delete=models.PROTECT, related_name="pedidos_obra"
+    )
+
+    cliente = models.ForeignKey(
+        Cliente, on_delete=models.PROTECT, related_name="pedidos_cliente"
+    )
+
+    planta = models.ForeignKey(
+        Planta, on_delete=models.PROTECT, related_name="pedidos_planta"
+    )
+
+
     def __str__(self):
-        return f"{self.nombre} {self.alias}"
+        return f"{self.tipo} cliente:{self.cliente.name} obra:{self.obra.name} planta:{self.planta.name} "
