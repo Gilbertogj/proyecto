@@ -12,6 +12,7 @@ class ClienteSerializer(serializers.ModelSerializer) :
 class ObraSerializer(serializers.ModelSerializer) :
   class Meta:
     model = Obra
+    fields = '__all__'
     
 class PlantaSerializer(serializers.ModelSerializer) :
   class Meta:
