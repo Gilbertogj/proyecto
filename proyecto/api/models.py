@@ -41,7 +41,7 @@ class Obra(models.Model):
     )
 
     def __str__(self):
-        return f"{self.nombre} {self.residente} cliente:{self.cliente.name}"
+        return f"{self.nombre} {self.residente} cliente:{self.cliente.nombre}"
 
 
 class Planta(models.Model):
