@@ -1,7 +1,7 @@
 from rest_framework import viewsets, generics
 
 from .models import Cliente, Obra, Planta, Pedido
-from .serializers import ClientesListSerializer, ClientesSerializer 
+from .serializers import ClientesListSerializer, ClientesSerializer, ObrasListSerializer, ObrasSerializer, ClienteObrasSerializer 
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -22,10 +22,37 @@ class RetrieveClientesAPIView(generics.RetrieveAPIView):
     queryset = Cliente.objects.all()
     serializer_class = ClientesSerializer
 
+class UpdateClientesAPIView(generics.UpdateAPIView):
+    queryset = Cliente.objects.all()
+    serializer_class = ClientesSerializer
+
+class DestroyClientesAPIView(generics.DestroyAPIView):
+    queryset = Cliente.objects.all()
+    serializer_class = ClientesSerializer
+
 #Obras Views
-class ListClientesAPIView(generics.ListAPIView):
-    queryset = Cliente.objects.all().order_by("created_at")
-    serializer_class = ClientesListSerializer
+class ListObrasAPIView(generics.ListAPIView):
+    queryset = Obra.objects.all().order_by("created_at")
+    serializer_class = ObrasListSerializer
+
+class RetrieveObrasAPIView(generics.RetrieveAPIView):
+    queryset = Obra.objects.all()
+    serializer_class = ObrasSerializer
+
+
+
+class UpdateObrasAPIView(generics.UpdateAPIView):
+    queryset = Obra.objects.all()
+    serializer_class = ObrasSerializer
+
+
+#Obras de Cliente
+
+class RetrieveClienteObrasAPIView(generics.RetrieveAPIView):
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteObrasSerializer
+
+
 
 
 

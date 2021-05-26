@@ -15,6 +15,39 @@ class ClientesSerializer(serializers.ModelSerializer):
       model = Cliente
       fields="__all__"
 
+## Obras Serializer
+
+class ObrasListSerializer(serializers.ModelSerializer):
+  class Meta:
+      model = Obra 
+      fields = ["id","nombre", "residente"]
+
+class ObrasSerializer(serializers.ModelSerializer):
+  class Meta:
+      model = Obra 
+      fields = "__all__"
+  
+
+# Clientes Obras
+
+class ClienteObrasSerializer(serializers.ModelSerializer):
+  obras= ObrasListSerializer(many=True)
+  class Meta:
+      model = Cliente
+      fields = [
+        "id", 
+        "nombre", 
+        "alias",
+        "direccion", 
+        "telefono",
+        "created_at",
+        "obras",
+        ]
+
+
+
+
+
 
 
 
