@@ -8,8 +8,20 @@ from .views import (
     DestroyClientesAPIView,
     #Obras
     ListObrasAPIView, RetrieveObrasAPIView,
+    CreateObrasAPIView,
+    UpdateObrasAPIView,
+    DestroyObrasAPIView,
     #Cliente Obras
-    RetrieveClienteObrasAPIView
+    RetrieveClienteObrasAPIView,
+    #Plantas
+    ListPlantasAPIView,
+    RetrievePlantasAPIView,
+    CreatePlantasAPIView,
+    UpdatePlantasAPIView,
+    DestroyPlantasAPIView,
+    #Pedidos
+    ListPedidosAPIView,
+    CreatePedidosAPIView,
 )
 
 urlpatterns = [
@@ -23,9 +35,23 @@ urlpatterns = [
     #Obras
     path("obras/", ListObrasAPIView.as_view(), name = "list-obras"),
     path("obras/<int:pk>/", RetrieveObrasAPIView.as_view(), name = "retrieve-obras"),
+    path("obras/create/", CreateObrasAPIView.as_view(), name = "create-obras"),
+    path("obras/<int:pk>/update/", UpdateObrasAPIView.as_view(), name = "update-obras"),
+    path("obras/<int:pk>/destroy/", DestroyObrasAPIView.as_view(), name = "destroy-obras"),
 
     #Cliente Obras
     path("clientes/<int:pk>/obras/", RetrieveClienteObrasAPIView.as_view(), name = "clientes-Obras"),
+
+    #Plantas
+    path("plantas/", ListPlantasAPIView.as_view(), name = "list-plantas"),
+    path("plantas/<int:pk>/", RetrievePlantasAPIView.as_view(), name = "retrieve-plantas"),
+    path("plantas/<int:pk>/", CreatePlantasAPIView.as_view(), name = "create-plantas"),
+    path("plantas/<int:pk>/", UpdatePlantasAPIView.as_view(), name = "update-plantas"),
+    path("plantas/<int:pk>/", DestroyPlantasAPIView.as_view(), name = "destroy-plantas"),
+
+    #Pedidos
+    path("pedidos/", ListPedidosAPIView.as_view(), name = "list-pedidos"),
+    path("pedidos/create/", CreatePedidosAPIView.as_view(), name = "create-pedidos"),
 
 
 

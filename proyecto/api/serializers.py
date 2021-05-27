@@ -45,6 +45,39 @@ class ClienteObrasSerializer(serializers.ModelSerializer):
         ]
 
 
+# Pedidos
+
+class PedidosListSerializer(serializers.ModelSerializer):
+  pedidos_cliente= ClientesListSerializer(many=True)
+  class Meta:
+      model = Pedido
+      fields=["id",
+        "pedidos_cliente",
+
+        ] 
+
+class PedidosSerializer(serializers.ModelSerializer):
+  class Meta:
+      model = Pedido
+      fields="__all__"
+
+
+#Plantas
+
+class PlantasListSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Planta
+    fields = [
+      "id",
+      "nombre",
+
+      ]
+
+class PlantasSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Planta
+    fields = "__all__"
+
 
 
 
