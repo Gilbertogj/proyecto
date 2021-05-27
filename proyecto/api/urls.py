@@ -19,9 +19,15 @@ from .views import (
     CreatePlantasAPIView,
     UpdatePlantasAPIView,
     DestroyPlantasAPIView,
+    UpdatePedidosAPIView,
     #Pedidos
     ListPedidosAPIView,
     CreatePedidosAPIView,
+    RetrievePedidosAPIView,
+    UpdatePedidosAPIView,
+    DestroyPedidosAPIView,
+
+
 )
 
 urlpatterns = [
@@ -45,13 +51,16 @@ urlpatterns = [
     #Plantas
     path("plantas/", ListPlantasAPIView.as_view(), name = "list-plantas"),
     path("plantas/<int:pk>/", RetrievePlantasAPIView.as_view(), name = "retrieve-plantas"),
-    path("plantas/<int:pk>/", CreatePlantasAPIView.as_view(), name = "create-plantas"),
+    path("plantas/create/", CreatePlantasAPIView.as_view(), name = "create-plantas"),
     path("plantas/<int:pk>/", UpdatePlantasAPIView.as_view(), name = "update-plantas"),
     path("plantas/<int:pk>/", DestroyPlantasAPIView.as_view(), name = "destroy-plantas"),
 
     #Pedidos
     path("pedidos/", ListPedidosAPIView.as_view(), name = "list-pedidos"),
+    path("pedidos/<int:pk>/", RetrievePedidosAPIView.as_view(), name = "retrieve-pedidos"),
     path("pedidos/create/", CreatePedidosAPIView.as_view(), name = "create-pedidos"),
+    path("pedidos/<int:pk>/update/", UpdatePedidosAPIView.as_view(), name = "update-pedidos"),
+    path("pedidos/<int:pk>/destroy/", DestroyPedidosAPIView.as_view(), name = "destroy-pedidos"),
 
 
 

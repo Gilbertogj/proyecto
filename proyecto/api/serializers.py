@@ -48,11 +48,11 @@ class ClienteObrasSerializer(serializers.ModelSerializer):
 # Pedidos
 
 class PedidosListSerializer(serializers.ModelSerializer):
-  pedidos_cliente= ClientesListSerializer(many=True)
+  
   class Meta:
       model = Pedido
       fields=["id",
-        "pedidos_cliente",
+   
 
         ] 
 

@@ -99,11 +99,21 @@ class ListPedidosAPIView(generics.ListAPIView):
     queryset = Pedido.objects.all()
     serializer_class = PedidosListSerializer
 
+class RetrievePedidosAPIView(generics.RetrieveAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidosSerializer
+
 class CreatePedidosAPIView(generics.CreateAPIView):
     queryset = Pedido.objects.all()
     serializer_class = PedidosSerializer
 
+class UpdatePedidosAPIView(generics.CreateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidosSerializer
 
+class DestroyPedidosAPIView(generics.CreateAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidosSerializer
 
 
 
