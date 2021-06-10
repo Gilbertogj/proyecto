@@ -1,5 +1,5 @@
 from django.db import models
-
+from decimal import Decimal
 
 #Relations
 # 1 Cliente - N Obra
@@ -31,7 +31,7 @@ class Obra(models.Model):
     nombre = models.CharField(max_length=255)
     residente = models.CharField(max_length=255)
     direccion = models.TextField(max_length=1000)
-    telefono = models.CharField(max_length=25, unique=True)
+    telefono = models.CharField(max_length=25)
     email = models.EmailField(unique=True, blank=True)  
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -58,6 +58,8 @@ class Planta(models.Model):
 class Pedido(models.Model):
     """Cliente model."""
 
+    metros_cubicos = models.DecimalField(max_digits=10, decimal_places= 2)
+
     TIPO_CONCRETO = (
         ("C", "Convencional"),
         ("R", "Rápido"),
@@ -68,9 +70,13 @@ class Pedido(models.Model):
         ("ES", "Estructurales"),
         ("AU", "Autocompactables"),
     )
-    tipo = models.CharField(max_length=30, choices=TIPO_CONCRETO, default="C")
+    tipo = models.CharField(max_length=30, choices=TIPO_CONCRETO)
 
     RESISTENCIA = (
+        ("25", "25"),
+        ("50", "50"),
+        ("75", "75"),
+        ("150", "150"),
         ("100", "100"),
         ("200", "200"),
         ("250", "250"),
@@ -79,7 +85,7 @@ class Pedido(models.Model):
         ("400", "400"),
         ("650", "650"),
     )
-    resistencia = models.CharField(max_length=10, choices=RESISTENCIA, default="200")
+    resistencia = models.CharField(max_length=10, choices=RESISTENCIA)
 
     EDAD = (
         ("R01", "R01"),
@@ -88,15 +94,15 @@ class Pedido(models.Model):
         ("R14", "R14"),
         ("N", "N"),
     )
-    edad = models.CharField(max_length=10, choices=EDAD, default="N")
+    edad = models.CharField(max_length=10, choices=EDAD)
 
     TAMAÑO_NOMINAL= (
         ("10", "3/8 10mm"),
         ("20", "3/4 20mm"),
         ("40", "1 1/12 40mm"),
-        ("05", "Arena"),
+        ("05", "Arena 05mm"),
     )
-    tma = models.CharField(max_length=20, choices=TAMAÑO_NOMINAL, default="20")
+    tma = models.CharField(max_length=20, choices=TAMAÑO_NOMINAL)
 
     REVENIMIENTO= (
         ("06", "06 cm"),
@@ -106,38 +112,34 @@ class Pedido(models.Model):
         ("14", "14 cm"),
         ("16", "16 cm"),
         ("18", "18 cm"),
-        ("22", "20 cm"),
+        ("20", "20 cm"),
+        ("22", "22 cm"),
     )
-    revenimiento = models.CharField(max_length=20, choices=REVENIMIENTO, default="14")
+    revenimiento = models.CharField(max_length=20, choices=REVENIMIENTO)
 
     FORMA= (
         ("T", "Tirado"),
         ("B", "Bombeado"),
     )
-    forma = models.CharField(max_length=10, choices=FORMA, default="14")
+    forma = models.CharField(max_length=10, choices=FORMA)
     
     TIPO_BOMBA= (
         ("Pluma", "Bomba Pluma"),
         ("Estacionaria", "Bomba Estacionaria"),
     )
-    tipo_bomba = models.CharField(max_length=20, choices=TIPO_BOMBA, default="Pluma")
+    tipo_bomba = models.CharField(max_length=20, choices=TIPO_BOMBA)
 
     NUMERO_BOMBA= (
-        ("BC-03 Pluma", "BC-03 Pluma"),
+        ("BC-03 Pluma", "BC-03 Pluma Chica"),
         ("BC-04 Pluma", "BC-04 Pluma"),
         ("BC-05 Pluma", "BC-05 Pluma"),
         ("BC-06 Estacionaria", "BC-06 Estacionaria"),
         
     )
-    numero_bomba = models.CharField(max_length=30, choices=NUMERO_BOMBA, default="BC-03 Pluma")
+    numero_bomba = models.CharField(max_length=30, choices=NUMERO_BOMBA)
     metros_adicionales = models.CharField(max_length=255)
 
     ADITIVO= (
-        ("Acelerante a 1 día", "Acelerante a 1 día"),
-        ("Acelerante a 14 días", "Acelerante a 14 días"),
-        ("Acelerante a 3 días", "Acelerante a 3 días"),
-        ("Acelerante a 7 días", "Acelerante a 7 días"),
-        ("Ahorrador de agua", "Ahorrador de agua"),
         ("Autocompactable", "Autocompactable"),
         ("Autocurable", "Autocurable"),
         ("Fibra de acero", "Fibra de acero"),
@@ -150,10 +152,11 @@ class Pedido(models.Model):
         ("Perlita de polipropileno", "Perlita de polipropileno"),
         ("Plastificantes", "Plastificantes"),
         ("Retardante", "Retardante"),
+        ("Ninguno", "Ninguno"),
         
     
     )
-    aditivo = models.CharField(max_length=30, choices=ADITIVO, default="Acelerante a 1 día")
+    aditivo = models.CharField(max_length=30, choices=ADITIVO)
 
     ELEMENTO_COLAR= (
         ("Arroyo", "Arroyo"),
@@ -179,13 +182,13 @@ class Pedido(models.Model):
         ("Muro de contención", "Muro de contención"),
         ("Muros de carga", "Muros de carga"),
         ("Nivelación de losa", "Nivelación de losa"),
-        ("Pisos", "Pisos"),
+        ("Piso pulido", "Piso pulido"),
         ("Rampa de acceso", "Rampa de acceso"),
         ("Talud", "Talud"),
         ("Zapata corrida", "Zapata corrida"),
         ("Zapatas", "Zapatas"),
     )
-    elemento_colar = models.CharField(max_length=255, choices=ELEMENTO_COLAR, default="Pisos")
+    elemento_colar = models.CharField(max_length=255, choices=ELEMENTO_COLAR)
     observaciones = models.CharField(max_length=255)
     fecha_pedido = models.DateTimeField()
 
