@@ -27,10 +27,16 @@ from .views import (
     UpdatePedidosAPIView,
     DestroyPedidosAPIView,
 
+    #Users
+    CreateUsersAPIView,
+
 
 )
 
 urlpatterns = [
+    #Users
+    path("users/create/", CreateUsersAPIView.as_view(), name="create-users"),
+
     #Clientes
     path("clientes/", ListClientesAPIView.as_view(), name = "list-clientes"),
     path("clientes/<int:pk>/", RetrieveClientesAPIView.as_view(), name = "retrieve-clientes"),

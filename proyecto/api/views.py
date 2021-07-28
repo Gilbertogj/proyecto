@@ -1,5 +1,5 @@
 from rest_framework import viewsets, generics
-
+from django.contrib.auth.models import User
 from .models import Cliente, Obra, Planta, Pedido
 from .serializers import (
     ClientesListSerializer, 
@@ -11,6 +11,7 @@ from .serializers import (
     PedidosSerializer,
     PlantasListSerializer,
     PlantasSerializer,
+    UsersSerializer
 ) 
 
 from django.shortcuts import render
@@ -116,7 +117,11 @@ class DestroyPedidosAPIView(generics.CreateAPIView):
     serializer_class = PedidosSerializer
 
 
+# Users
 
+class CreateUsersAPIView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UsersSerializer
 
 
 
