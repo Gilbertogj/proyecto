@@ -14,6 +14,11 @@ class Cliente(models.Model):
     nombre = models.CharField(max_length=255)
     alias = models.CharField(max_length=255)
     rfc = models.TextField(max_length=100, unique=True)
+    METODO_PAGO = (
+        ("F", "F"),
+        ("G", "G"),
+    )
+    PAGO = models.CharField(max_length=5, choices=METODO_PAGO) 
     direccion = models.TextField(max_length=1000)
     telefono = models.CharField(max_length=25, unique=True)
     email = models.EmailField(unique=True)  
@@ -196,7 +201,7 @@ class Pedido(models.Model):
         ("Activado", "Activado"),
         ("Desactivado", "Desactivado"),
     )
-    status= models.CharField(max_length=25, choices=STATUS_TYPE, default="Activado")
+    status= models.CharField(max_length=25, choices=STATUS_TYPE, default="Desactivado")
     created_at = models.DateTimeField(auto_now_add=True)
 
     # Relations
@@ -214,4 +219,4 @@ class Pedido(models.Model):
 
 
     def __str__(self):
-        return f"{self.tipo} cliente:{self.cliente.name} obra:{self.obra.name} planta:{self.planta.name} "
+        return f"{self.tipo} cliente:{self.cliente.nombre} obra:{self.obra.nombre} planta:{self.planta.nombre} "
