@@ -32,7 +32,7 @@ from .views import (
 
 
 )
-
+#comentario 
 urlpatterns = [
     #Users
     path("users/create/", CreateUsersAPIView.as_view(), name="create-users"),
