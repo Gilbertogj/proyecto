@@ -1,4 +1,5 @@
 from django.urls import path, include
+from rest_framework.authtoken import views
 from rest_framework import routers
 from .views import (
     #Clientes
@@ -36,7 +37,7 @@ from .views import (
 urlpatterns = [
     #Users
     path("users/create/", CreateUsersAPIView.as_view(), name="create-users"),
-
+    path("users/login/", views.obtain_auth_token, name="login-users"),
     #Clientes
     path("clientes/", ListClientesAPIView.as_view(), name = "list-clientes"),
     path("clientes/<int:pk>/", RetrieveClientesAPIView.as_view(), name = "retrieve-clientes"),
