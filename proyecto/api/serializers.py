@@ -7,7 +7,7 @@ from .models import Cliente, Obra, Planta, Pedido
 class ClientesListSerializer(serializers.ModelSerializer):
   class Meta:
       model = Cliente
-      fields=["id", "nombre", "alias"]
+      fields=["id", "nombre", "alias", "created_at"]
 
 
 class ClientesSerializer(serializers.ModelSerializer):
